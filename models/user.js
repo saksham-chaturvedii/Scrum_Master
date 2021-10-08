@@ -15,8 +15,13 @@ const user = sequelize.define(
     role: {
       type: DataTypes.STRING,
       // defaultValue: col("teamName"),
-      defaultValue: "Member",
-      type: DataTypes.ENUM("Vice Team Leader", "Team Leader", "Batch Leader"),
+      defaultValue: "Student",
+      type: DataTypes.ENUM(
+        "Student",
+        "Vice Team Leader",
+        "Team Leader",
+        "Batch Leader"
+      ),
     },
     username: {
       type: DataTypes.STRING,

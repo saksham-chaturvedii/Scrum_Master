@@ -1,6 +1,3 @@
-/**
- * Here, we're using Sequelize to mention details related to our database.
- */
 const Sequelize = require("sequelize");
 const {
   sequelize_database,
