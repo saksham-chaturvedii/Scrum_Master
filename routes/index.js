@@ -12,6 +12,8 @@ router.post("/login-user", async (req, res) => {
   await userLogin(req.body, res);
 });
 
+// router.post("/")
+
 // // Batch Leader Login Route
 // router.post("/login-admin", async (req, res) => {
 //   await userLogin(req.body, "admin", res);

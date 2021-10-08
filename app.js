@@ -5,7 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 var passportRouter = require("./routes/index");
-var usersRouter = require("./routes/registeredUsers");  
+var usersRouter = require("./routes/registeredUsers");
 const passport = require("passport");
 
 var app = express();
@@ -22,8 +22,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(passport.initialize());
 require("./middlewares/passport")(passport);
-app.use("/registered-students", usersRouter);
 app.use("/", passportRouter);
+app.use("/registered-students", usersRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
