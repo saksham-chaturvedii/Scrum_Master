@@ -1,16 +1,16 @@
 const router = require("express").Router();
 // Bring in the User Registration function
-const { userRegister } = require("../utils/Auth");
+const { userRegister, userLogin } = require("../utils/Auth");
 
 // Users Registeration Route
 router.post("/register-user", async (req, res) => {
   await userRegister(req.body, res);
 });
 
-// // Users Login Route
-// router.post("/login-user", async (req, res) => {
-//   await userLogin(req.body, "user", res);
-// });
+// Users Login Route
+router.post("/login-user", async (req, res) => {
+  await userLogin(req.body, res);
+});
 
 // // Batch Leader Login Route
 // router.post("/login-admin", async (req, res) => {
