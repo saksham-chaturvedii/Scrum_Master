@@ -3,30 +3,48 @@ const sequelize = require("../database/index");
 const scrum = sequelize.define(
   "scrum",
   {
+    date: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     attendance: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    sawLastLecture: {
+    saw_last_lecture: {
       //   type: DataTypes.STRING,
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     tha: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    topicsToCover: {
+    topics_to_cover: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    backlogReason: {
+    backlog_reason: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    classRating: {
+    class_rating: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    userId: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    createdAt: {
+      allowNull: true,
+      defaultValue: new Date(),
+      type: DataTypes.DATE,
+    },
+    updatedAt: {
+      allowNull: true,
+      defaultValue: new Date(),
+      type: DataTypes.DATE,
     },
   },
   {

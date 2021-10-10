@@ -7,8 +7,25 @@ var logger = require("morgan");
 var passportRouter = require("./routes/index");
 var usersRouter = require("./routes/registeredUsers");
 const passport = require("passport");
+const { redisClient, RedisStore, session } = require("./database/redis");
+var { SECRET } = require("./config");
 
 var app = express();
+
+//Redis session store
+app.use(
+  session({
+    store: new RedisStore({ client: redisClient }),
+    secret: SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false,
+      httpOnly: false,
+      maxAge: 1000 * 60 * 10,
+    },
+  })
+);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -24,7 +41,6 @@ app.use(passport.initialize());
 require("./middlewares/passport")(passport);
 app.use("/", passportRouter);
 app.use("/registered-students", usersRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

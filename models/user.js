@@ -1,5 +1,6 @@
-const { DataTypes, col, literal } = require("sequelize");
+const { DataTypes, col, literal, BelongsTo } = require("sequelize");
 const sequelize = require("../database/index");
+const scrum = require("./scrum");
 const user = sequelize.define(
   "user",
   {
@@ -40,5 +41,8 @@ const user = sequelize.define(
     freezeTableName: true,
   }
 );
+scrum.belongsTo(user, {
+  foreignKey: "scrum_userId_fkey",
+});
 
 module.exports = user;

@@ -10,7 +10,7 @@ const { Op, where } = require("sequelize");
  * Roles-> (Student, Vice Team Leader, Team Leader, Batch Leader)
  */
 
-const userRegister = async (userDets, res) => {
+const userRegister = async (req, userDets, res) => {
   try {
     const { email, username, teamName, role, password } = userDets;
     // Validate the username
@@ -71,7 +71,7 @@ const validateEmail = async (email) => {
  *  USER LOGIN
  */
 
-const userLogin = async (userCreds, res) => {
+const userLogin = async (req, userCreds, res) => {
   let { username, password } = userCreds;
 
   // Check if user is present in the database
@@ -107,6 +107,21 @@ const userLogin = async (userCreds, res) => {
       token: `Bearer ${token}`,
       expiresIn: 168, //hours
     };
+    var today = new Date();
+
+    var date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
+    const LoggedInSession = req.session;
+    LoggedInSession.username = result.username;
+    LoggedInSession.role = result.role;
+    LoggedInSession.teamName = result.teamName;
+    LoggedInSession.date = date;
+
+    console.log("loggedin sessio ----------------> ", LoggedInSession);
 
     return res.status(200).json({
       ...result,
@@ -121,7 +136,25 @@ const userLogin = async (userCreds, res) => {
   }
 };
 
+/**
+ * JWT Token verification
+ */
+
+const userAuth = passport.authenticate("jwt", { session: false });
+
+const checkRole = (roles) => (req, res, next) => {
+  console.log("roles-> ", roles);
+  return !roles.includes(req.body.role)
+    ? res.status(400).json("Unauthorized")
+    : next();
+};
+
+const editScrum = () => {};
+
 module.exports = {
   userRegister,
   userLogin,
+  userAuth,
+  checkRole,
+  editScrum,
 };
