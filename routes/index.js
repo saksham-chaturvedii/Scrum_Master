@@ -20,11 +20,7 @@ router.post("/login-user", async (req, res) => {
 // Check all Registered Users
 router.get("/registered-users", registeredUsers);
 
-/**
- * SCRUM ENTRY
- *
- * role- Student
- */
+// ENTER SCRUM, Role- "Student"
 router.post("/student-scrum-entry", userAuth, studentScrumEntry);
 
 module.exports = router;
