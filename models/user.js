@@ -1,6 +1,5 @@
 const { DataTypes, col, literal, BelongsTo } = require("sequelize");
 const sequelize = require("../database/index");
-const scrum = require("./scrum");
 const user = sequelize.define(
   "user",
   {
@@ -27,6 +26,8 @@ const user = sequelize.define(
     username: {
       type: DataTypes.STRING,
       allowNull: false,
+      // unique: true,
+      // prinaryKey: true,
     },
     password: {
       type: DataTypes.STRING,
@@ -41,8 +42,5 @@ const user = sequelize.define(
     freezeTableName: true,
   }
 );
-scrum.belongsTo(user, {
-  foreignKey: "scrum_userId_fkey",
-});
 
 module.exports = user;

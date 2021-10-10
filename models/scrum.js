@@ -1,5 +1,6 @@
 const { DataTypes, col, literal } = require("sequelize");
 const sequelize = require("../database/index");
+const user = require("./user");
 const scrum = sequelize.define(
   "scrum",
   {
@@ -32,10 +33,6 @@ const scrum = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    userId: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     createdAt: {
       allowNull: true,
       defaultValue: new Date(),
@@ -51,5 +48,9 @@ const scrum = sequelize.define(
     freezeTableName: true,
   }
 );
+user.hasMany(scrum);
+scrum.belongsTo(user, {
+  foreignKey: "userId",
+});
 
 module.exports = scrum;

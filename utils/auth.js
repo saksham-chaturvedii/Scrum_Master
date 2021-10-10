@@ -4,6 +4,7 @@ const passport = require("passport");
 const User = require("../models/user");
 const { SECRET } = require("../config/index");
 const { Op, where } = require("sequelize");
+const user = require("../models/user");
 
 /**
  * USER REGISTRATION
@@ -107,21 +108,18 @@ const userLogin = async (req, userCreds, res) => {
       token: `Bearer ${token}`,
       expiresIn: 168, //hours
     };
-    var today = new Date();
 
+    var today = new Date();
     var date =
       today.getFullYear() +
       "-" +
       (today.getMonth() + 1) +
       "-" +
       today.getDate();
-    const LoggedInSession = req.session;
-    LoggedInSession.username = result.username;
-    LoggedInSession.role = result.role;
-    LoggedInSession.teamName = result.teamName;
-    LoggedInSession.date = date;
 
-    console.log("loggedin sessio ----------------> ", LoggedInSession);
+    // Store logged-in user's data in Redis Store
+    req.session.user = user;
+    req.session.user.date = date;
 
     return res.status(200).json({
       ...result,
@@ -142,19 +140,24 @@ const userLogin = async (req, userCreds, res) => {
 
 const userAuth = passport.authenticate("jwt", { session: false });
 
-const checkRole = (roles) => (req, res, next) => {
-  console.log("roles-> ", roles);
-  return !roles.includes(req.body.role)
-    ? res.status(400).json("Unauthorized")
-    : next();
+const registeredUsers = async (req, res) => {
+  try {
+    await user
+      .findAll({
+        attributes: [`name`, `username`, `teamName`, `role`],
+        order: ["id"],
+      })
+      .then(function (users) {
+        res.status(200).json(users);
+      });
+  } catch (err) {
+    console.warn("Error in retrieving user data.", err);
+  }
 };
-
-const editScrum = () => {};
 
 module.exports = {
   userRegister,
   userLogin,
   userAuth,
-  checkRole,
-  editScrum,
+  registeredUsers,
 };
