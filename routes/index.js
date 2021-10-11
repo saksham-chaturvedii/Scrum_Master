@@ -4,6 +4,7 @@ const addAttendance = require("../controllers/addAttendance");
 const logout = require("../controllers/logout");
 const viewTeamScrum = require("../controllers/viewTeamScrum");
 const registeredUsers = require("../controllers/registeredUsers");
+const checkAttendance = require("../controllers/checkAttendance");
 const { userRegister, userLogin, userAuth } = require("../utils/Auth");
 
 // Users Registeration Route
@@ -23,7 +24,7 @@ router.get("/logout-user", logout);
 router.get("/registered-users", userAuth, registeredUsers);
 
 // ENTER/UPDATE SCRUM, Permission to Role- "Student"
-router.post("/student-scrum-entry", userAuth, studentScrumEntry);
+router.post("/student-scrum-entry", userAuth, checkAttendance ,studentScrumEntry);
 
 // Add Attendance, Permission to Role - "Vice Team Leader" or "Team Leader"
 router.post("/update-attendance", userAuth, addAttendance);

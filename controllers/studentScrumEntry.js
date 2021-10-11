@@ -5,16 +5,17 @@ module.exports = async (req, res) => {
   try {
     // If scrum data for today extists
     console.log("re", req.session);
-    if (
-      await scrum.findOne({
-        where: {
-          [Op.and]: [
-            { userId: req.session.user.id },
-            { date: req.session.user.createdAt },
-          ],
-        },
-      })
-    ) {
+    // if (
+    await scrum.findOne({
+      where: {
+        [Op.and]: [
+          { userId: req.session.user.id },
+          { date: req.session.user.createdAt },
+        ],
+      },
+    });
+    // )
+    {
       // update
       await scrum
         .update(
@@ -33,21 +34,6 @@ module.exports = async (req, res) => {
           res
             .status(200)
             .json({ message: `SCRUM data updated.`, success: true });
-        });
-    } else {
-      // create new
-      await scrum
-        .create({
-          date: req.session.user.createdAt,
-          saw_last_lecture: req.body.saw_last_lecture,
-          tha: req.body.tha,
-          topics_to_cover: req.body.topics_to_cover,
-          backlog_reason: req.body.backlog_reason,
-          class_rating: req.body.class_rating,
-          userId: req.session.user.id,
-        })
-        .then((result) => {
-          res.status(200).json(result);
         });
     }
   } catch (err) {

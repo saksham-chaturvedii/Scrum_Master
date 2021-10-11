@@ -18,22 +18,13 @@ module.exports = async (req, res) => {
         where: { username: req.body.member_username },
       });
 
-      // check given member's scrum exists or not
-      const member_scrum = await scrum.findOne({
-        where: { userId: member_username.dataValues.id },
-      });
-      if (!member_scrum) {
-        res
-          .status(400)
-          .send("SCRUM data for the member mentioned does not exist.");
-      }
-
       // check given member's username (whose attendance has to be marked), exists in same team or not
       if (member_username) {
         await scrum
-          .update(
+          .create(
             {
               attendance: req.body.attendance,
+              userId: member_username.dataValues.id,
             },
             { where: { userId: member_username.dataValues.id } }
           )
