@@ -5,8 +5,8 @@ const logout = require("../controllers/logout");
 const viewTeamScrum = require("../controllers/viewTeamScrum");
 const registeredUsers = require("../controllers/registeredUsers");
 const checkAttendance = require("../controllers/checkAttendance");
-const checkTeam = require("../controllers/checkTeam");
-const assign_BL_teams = require("../controllers/assign_BL_teams");
+// const checkTeam = require("../controllers/checkTeam");
+// const assign_BL_teams = require("../controllers/assign_BL_teams");
 const { userRegister, userLogin, userAuth } = require("../utils/Auth");
 
 // Users Registeration Route-["Student", "Vice Team Leader", "Team Leader","Batch Leader"]
@@ -15,7 +15,7 @@ router.post("/register-user", async (req, res) => {
 });
 
 // Assign teams to Batch Leader. Batch Leader registration is done normally, just like other users on the "register-user" route. Batch Leader needs to be assigned its teams before logging in.
-router.post("/assigned_batch_leader_teams", checkTeam, assign_BL_teams); // Not working
+// router.post("/assigned_batch_leader_teams", checkTeam, assign_BL_teams); // Not working
 
 // User Login Route-["Student", "Vice Team Leader", "Team Leader","Batch Leader"]
 router.post("/login-user", async (req, res) => {
