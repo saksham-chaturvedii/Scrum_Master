@@ -37,6 +37,12 @@ const user = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    createdAt: {
+      type: DataTypes.DATEONLY,
+    },
+    updatedAt: {
+      type: DataTypes.DATEONLY,
+    },
   },
   {
     freezeTableName: true,

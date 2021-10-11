@@ -10,7 +10,7 @@ const scrum = sequelize.define(
     },
     attendance: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     saw_last_lecture: {
       //   type: DataTypes.STRING,
@@ -36,12 +36,12 @@ const scrum = sequelize.define(
     createdAt: {
       allowNull: true,
       defaultValue: new Date(),
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
     },
     updatedAt: {
       allowNull: true,
       defaultValue: new Date(),
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
     },
   },
   {

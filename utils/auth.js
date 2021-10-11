@@ -39,7 +39,6 @@ const userRegister = async (req, userDets, res) => {
       ...userDets,
       password: hashedPassword,
     });
-    // console.log("-------------------New User-> ", newUser.toJSON());
 
     return res.status(201).json({
       message: "You have been registered successfully.",
@@ -110,7 +109,7 @@ const userLogin = async (req, userCreds, res) => {
     };
 
     var today = new Date();
-    var date =
+    var date_ =
       today.getFullYear() +
       "-" +
       (today.getMonth() + 1) +
@@ -118,13 +117,15 @@ const userLogin = async (req, userCreds, res) => {
       today.getDate();
 
     // Store logged-in user's data in Redis Store
+    // req.session.user = user; // not working
+    // req.session.user.date = date_;
+    // req.session.destroy();
     req.session.user = user;
-    req.session.user.date = date;
 
     return res.status(200).json({
-      ...result,
       message: "Yo, you are now logged in.",
       success: true,
+      ...result,
     });
   } else {
     return res.status(403).json({
@@ -140,24 +141,8 @@ const userLogin = async (req, userCreds, res) => {
 
 const userAuth = passport.authenticate("jwt", { session: false });
 
-const registeredUsers = async (req, res) => {
-  try {
-    await user
-      .findAll({
-        attributes: [`name`, `username`, `teamName`, `role`],
-        order: ["id"],
-      })
-      .then(function (users) {
-        res.status(200).json(users);
-      });
-  } catch (err) {
-    console.warn("Error in retrieving user data.", err);
-  }
-};
-
 module.exports = {
   userRegister,
   userLogin,
   userAuth,
-  registeredUsers,
 };
