@@ -4,8 +4,6 @@ const { Op, where } = require("sequelize");
 module.exports = async (req, res) => {
   try {
     // If scrum data for today extists
-    console.log("re", req.session);
-    // if (
     await scrum.findOne({
       where: {
         [Op.and]: [
@@ -14,7 +12,6 @@ module.exports = async (req, res) => {
         ],
       },
     });
-    // )
     {
       // update
       await scrum

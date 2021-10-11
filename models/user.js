@@ -1,4 +1,4 @@
-const { DataTypes, col, literal, BelongsTo } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const sequelize = require("../database/index");
 const user = sequelize.define(
   "user",
@@ -6,7 +6,6 @@ const user = sequelize.define(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      // unique: true,
     },
     email: {
       type: DataTypes.STRING,
@@ -14,7 +13,6 @@ const user = sequelize.define(
     },
     role: {
       type: DataTypes.STRING,
-      // defaultValue: col("teamName"),
       defaultValue: "Student",
       type: DataTypes.ENUM(
         "Student",
@@ -26,8 +24,6 @@ const user = sequelize.define(
     username: {
       type: DataTypes.STRING,
       allowNull: false,
-      // unique: true,
-      // prinaryKey: true,
     },
     password: {
       type: DataTypes.STRING,
